@@ -1,76 +1,40 @@
-
+//import components needed
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
+  Navigator
 } from 'react-native';
 
-class Comm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {text: ''};
-  }
+var Register = require('./app/Register');
+var Congrats = require('./app/Congrats');
 
+class Comm extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.text}
-          placeholder= "Username"
-          onChangeText={(text) => this.setState({text})}
-        />
-        <TextInput
-          style={styles.text}
-          placeholder="Email"
-          onChangeText={(text)=> this.setState({text})}
-          />
-      <TextInput
-          style={styles.text}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={(text)=> this.setState({text})}
-          />
-        <TextInput
-          style={styles.text}
-          placeholder="Confirm Password"
-          secureTextEntry={true}
-          onChangeText={(text)=> this.setState({text})}
-          />
-        <Text style={styles.register}>Register</Text>
-
-      </View>
-
+      <Navigator
+        initialRoute= {{
+          id:'Register'
+        }}
+        renderScene={
+          this.navigatorRenderScene
+        }
+      />
     );
   }
+
+  //Class uses switch statement to navigate between different scenes using their IDs
+  navigatorRenderScene(route, navigator){
+    _navigator = navigator;
+    switch(route.id){
+      case'Register':
+        return(<Register navigator={navigator} title = "Register" />);
+
+      case'Congrats':
+        return(<Congrats navigator ={navigator} title ="Congrats" />);
+
+    }
+
+  }
 }
-const styles = StyleSheet.create({
-  container: {
-    padding: 25,
-    flex: 6,
-    backgroundColor: '#FFA07A',
-  },
-
-  text: {
-    textAlign: 'left',
-    color: '#FAF0E6',
-    marginBottom: 5,
-    height: 50,
-    flex: 1
-  },
-      register: {
-        textAlign: 'center',
-        fontSize: 25,
-        fontWeight:'bold',
-        height: 10,
-        backgroundColor: '#f08080',
-        padding: 20,
-        alignItems: 'center',
-        flex: 1/2
-
-    },
-});
 
 AppRegistry.registerComponent('Comm', () => Comm);
