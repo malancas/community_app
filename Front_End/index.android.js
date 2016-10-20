@@ -1,3 +1,3 @@
 'use strict';
 
-import ios_android from './ios_android';
+import front_end from './front_end';
