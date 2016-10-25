@@ -11,10 +11,11 @@ function registerUser(uname, pword){
     }
   }
   var newUser = new User ({
-    username: uname,
-    password: pword
+    username : uname,
+    password : pword,
+    admin : false
   });
-  newUser.save(function(err) {if (err) console.log ('Error adding user to database') return { status: "error", data: "User couldn't be saved" }});
+  newUser.save(function(err) {if (err) console.log ('Error adding user to database') return { status : "error", data : "User couldn't be saved" }});
   
   return 
   {
