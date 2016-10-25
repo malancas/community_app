@@ -6,8 +6,10 @@ var userSchema = new Schema({
   password: { type: String, required: true },
   admin: Boolean,
   //location: String // Change to use gps info
-  created_at: Date
   questions = []
+},
+{
+   timestamps: true //automatically adds createdAt/updatedAt fields
 });
 
 var User = mongoose.model('User', userSchema);
