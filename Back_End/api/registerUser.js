@@ -1,9 +1,9 @@
 var mongoose = require("mongoose");
-var User = mongoose.model('User', ../models/userSchema);
+var User = require("../models/userSchema");
 
 //Username and password should already be parsed
 function registerUser(uname, pword){
-  if (User.findOne({ 'username': uname})){
+  if (!User.findOne({ "username": uname })){
     return 
     {
       status : "fail",
