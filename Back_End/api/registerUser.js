@@ -5,10 +5,10 @@ var User = require("../models/userSchema");
 function registerUser(uname, pword){
   if (!User.findOne({ "username": uname })){
     return 
-    {
-      status : "fail",
-      data : { "username" : "Username is already taken" }
-    }
+    ({
+      "status" : "fail",
+      "data" : { "username" : "Username is already taken" }
+    });
   }
   var newUser = new User ({
     username : uname,
@@ -18,10 +18,14 @@ function registerUser(uname, pword){
   newUser.save(function(err) {if (err) console.log ('Error adding user to database') return { status : "error", data : "User couldn't be saved" }});
   
   return 
-  {
-    status : "success",
-    data : { 
+  ({
+    "status" : "success",
+    "data" : { 
       "post" : { "username" : uname, "password" : pword }
     }
-  }
+  });
+}
+
+module.exports = {
+  registerUser:registerUser
 }
