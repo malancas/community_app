@@ -43,4 +43,4 @@ app.delete('/question', function(req, res) {
 mongoose.connect('mongodb://localhost/communitydb');
 
 // Told express to listen to HTTP requests on port 3000
-app.listen(3000)
+app.listen(3000);

@@ -6,4 +6,9 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+// PUT new user page
+router.get('/user', function(req, res, next) {
+  res.render('index', { title: 'USer' });
+});
+
 module.exports = router;

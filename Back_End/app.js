@@ -12,10 +12,12 @@ var mongoose = require('mongoose');
 var app = express();
 
 // development only
+/*
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
   mongoose.connect('address to db');
 }
+*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
