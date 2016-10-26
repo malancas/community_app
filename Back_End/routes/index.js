@@ -11,4 +11,6 @@ router.get('/user', function(req, res, next) {
   res.render('index', { title: 'USer' });
 });
 
+router
+
 module.exports = router;
