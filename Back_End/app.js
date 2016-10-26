@@ -63,7 +63,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-mongoose.connect('mongodb://localhost:27017/database')
+mongoose.connect('mongodb://localhost:27017/communitydb')
 
 app.listen(3000, ()=> {
     console.log('Express server listening on port 3000')
