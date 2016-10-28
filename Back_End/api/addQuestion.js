@@ -2,23 +2,25 @@ var mongoose = require("mongoose");
 var User = require("../models/userSchema");
 
 function addQuestion(uname, qname, qdescription, qcategory){
-  var query = User.findOne({ "username" : uname });
-  if (!query){
+  User.findOne({ "username" : uname });
+  if (!User){
     return
     ({
       "status" : "fail",
       "data" : { "username" : "User not found" }
     });
   }
-
-  userQuestions = query.select("questions");
+  
+  // Make unique id
   {$push : {
-    userQuestions : {
+    User.questions : {
       "name" : qname,
       "description" : qdescription,
       "category" : qcategory
+      //"id" : generate unique id
     }
   }}
+  
   return
   ({
     "status" : "success",

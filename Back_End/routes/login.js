@@ -8,7 +8,9 @@ var router = express.Router()
 var jsonParser = bodyParser.json()
 // Log user in, assume app is already connected to the database
 router.get('/login', function(req, res) {
-  if (!req.body) return res.send( ({"status" : "fail",
+  if (!req.body) res.send( ({"status" : "fail",
                                    "data" : "No data sent"}); )
   res.send(login.login(req.body.username, req.body.password))
 });
+
+model.exports = router;
