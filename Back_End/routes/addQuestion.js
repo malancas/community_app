@@ -8,8 +8,8 @@ var router = express.Router();
 var jsonParser = bodyParser.json()
 // Log user in, assume app is already connected to the database
 router.put('/addQuestion', jsonParser, function(req, res) {
-  if (!req.body) res.send( ({"status" : "fail",
-                                   "data" : "No data sent"}); )
+  if (!req.body) res.json({"status" : "fail",
+                                   "data" : "No data sent"});
   //parse input from json format
   res.send(addQuestion.addQuestion(req.body.username, req.body.qname, qdescription, qcategory))
 });
