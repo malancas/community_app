@@ -49,6 +49,10 @@ function viewQuestion(req, res){
 }
 
 function register(req, res){
+  if (User.findOne({ "username": req.body.username })){
+    res.json({"status": "fail",
+             "Message" : "Username already taken"});
+  }
   var newUser = new User({
     username: req.body.username,
     password: req.body.password
@@ -56,7 +60,8 @@ function register(req, res){
 
   newUser.save(function(err) {
     if (err){
-      res.json({"ERROR": err});
+      res.json({"status": "fail",
+                "ERROR": err});
     }
     else {
       res.json({"SUCCESS": newUser});

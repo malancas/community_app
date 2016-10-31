@@ -15,12 +15,13 @@ describe('/PUT register', function() {
         console.log(res.body)
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.should.have.property('ERROR');
+        res.body.should.have.property('status');
         done();
       });
   });
 });
 
+/*
 describe('/POST login', function() {
   it('should login a user on /login POST', function(done) {
     chai.request(server)
@@ -35,5 +36,5 @@ describe('/POST login', function() {
       });
     });
 });
-
+*/
 // http://mherman.org/blog/2015/09/10/testing-node-js-with-mocha-and-chai/
