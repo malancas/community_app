@@ -7,17 +7,15 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var mongoose = require('mongoose');
 
 var app = express();
 
-// development only
-/*
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-  mongoose.connect('address to db');
-}
-*/
+
+var mongoose = require('mongoose');
+var users = require('./models/userSchema');
+var Question = require('./models/questionSchema');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/community1');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,7 +30,47 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+//app.use('/users', users);
+
+
+/*--------------api functions--------------------*/
+
+//USER DISPLAY
+app.get('/users', function(req, res) {
+   mongoose.model('User').find(function (err,User){
+      res.send(User);
+      console.log(User);
+   });
+});
+
+//REGISTER USER
+var registerAPI = require('./api/registerUser');
+app.get('/register', function(req, res) {
+   registerAPI.registerUser('joy','password');
+});
+
+//LOGIN USER
+var loginAPI = require('./api/loginUser');
+app.get('/login', function (req, res) {
+   loginAPI.loginUser('bob','password');
+});
+
+//ADD QUESTION
+var questionAPI = require('./api/addQuestion');
+app.get('/question', function(req, res) {
+   questionAPI.addQuestion('bob', 'test', 'descript','category');
+});
+
+app.get('/posts', function(req, res) {
+   mongoose.model('Question').find(function (err, Question) {
+      res.send(Question);
+      console.log(Question);
+   })
+})
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,10 +103,5 @@ app.use(function(err, req, res, next) {
   });
 });
 
-mongoose.connect('mongodb://localhost:27017/communitydb')
-
-app.listen(3000, ()=> {
-    console.log('Express server listening on port 3000')
-})
 
 module.exports = app;
