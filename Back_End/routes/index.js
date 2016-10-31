@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 // Log user in, assume app is already connected to the database
 router.put('/addQuestion', addQuestion);
 router.delete('/deleteQuestion', deleteQuestion);
-router.get('/viewQuestion', getQuestion);
+router.get('/viewQuestion', viewQuestion);
 router.put('/register', register);
 router.post('/login', login);
 

@@ -1,11 +1,11 @@
-var mongoose = require('moongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var questionSchema = new Schema({
   name : { type: String, required: true},
   description : { type: String, required: true },
   category : { type: String, required: true },
-  id : { type: Integer, required: true },
+  //id : { type: Integer, required: true },
 },
 {
   timestamps : true
