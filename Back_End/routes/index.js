@@ -49,65 +49,30 @@ function viewQuestion(req, res){
 }
 
 function register(req, res){
-  if (!req.body) return res.json({"status" : "fail",
-                                   "data" : "No data sent"});
-  else if (!User.findOne({"username" : req.user.username})){
-    res.json({
-      "status" : "fail",
-      "data" : { "username" : "Username is already taken" }
-    });
-  }
-  else {
-    var newUser = new User ({
-      "username" : req.user.username,
-      "password" : req.user.password,
-      "admin" : false
-    });
-    newUser.save(function(err) {
-      if (err) {
-        console.log('Error adding user to database');
-        res.json({
-          "status" : "error",
-          "data" : "User couldn't be saved"
-        });
-      }
-      res.json({
-        "status" : "success",
-        "data" : {
-          "post" : {"username" : req.user.username, 
-                    "password" : req.user.password}
-        }
-      });
-    });
-  }
+  var newUser = new User({
+    username: req.body.username,
+    password: req.body.password
+  });
+
+  newUser.save(function(err) {
+    if (err){
+      res.json({"ERROR": err});
+    }
+    else {
+      res.json({"SUCCESS": newUser});
+    }
+  });
 }
 
 function login(req, res){
-  if (!req.body) {
-    res.json({
-      "status" : "fail",
-      "data" : "No data sent"
-    });
-  }
-  else if (!User.findOne({"username" : req.user.username})){
-    res.json({
-      "status" : "fail",
-      "data" : { "username" : "Username not found" }
-    });
+  if (!User.findOne({"username" : req.body.username})){
+    res.json({"STATUS": "fail"});
   }
   else if (!User.findOne({"username" : req.user.username, "password" : req.user.password})){
-    res.json({
-      "status" : "fail",
-      "data" : { "Password" : "Incorrect password" }
-    });
+    res.json({"status" : "fail"});
   }
   else {
-    res.json({
-      "status" : "success",
-      "data" : { 
-        "post" : { "username" : uname, "password" : pword }
-      }
-    });
+    res.json({"SUCCESS" : User});
   }
 }
 

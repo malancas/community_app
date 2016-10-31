@@ -1,21 +1,38 @@
 var chai = require("chai");
-var should = chai.should();
 var chaiHttp = require("chai-http");
+var expect = chai.expect();
 var should = chai.should();
-var registerRoute = ("../routes/register");
-var registerApi = ("../api/register");
+var server = require('../app');
 
 chai.use(chaiHttp);
 
-describe('addQuestion', function() {
+describe('/PUT register', function() {
   it('should register a new user on /register PUT', function(done) {
-    chai.request(registerApi)
-    chai.request(registerRoute)
+    chai.request(server)
       .put('/register')
+      .send({"username": "sampleName", "password": "temp"})
       .end(function(err, res) {
+        console.log(res.body)
         res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('ERROR');
         done();
-    })
+      });
+  });
+});
+
+describe('/POST login', function() {
+  it('should login a user on /login POST', function(done) {
+    chai.request(server)
+      .put('/login')
+      .send({"username": "sampleName", "password": "temp"})
+      .end(function(err, res) {
+        console.log(res.body)
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('SUCCESS');
+        done();
+      });
     });
 });
 
