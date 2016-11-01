@@ -15,7 +15,7 @@ var mongoose = require('mongoose');
 var users = require('./models/userSchema');
 var Question = require('./models/questionSchema');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/community1');
+mongoose.connect('mongodb://localhost/dbcoll');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,19 +46,19 @@ app.get('/users', function(req, res) {
 //REGISTER USER
 var registerAPI = require('./api/registerUser');
 app.get('/register', function(req, res) {
-   registerAPI.registerUser('joy','password');
+   registerAPI.registerUser('mary', 'password', 'email1');
 });
 
 //LOGIN USER
 var loginAPI = require('./api/loginUser');
 app.get('/login', function (req, res) {
-   loginAPI.loginUser('bob','password');
+   loginAPI.loginUser('mary','password');
 });
 
 //ADD QUESTION
 var questionAPI = require('./api/addQuestion');
 app.get('/question', function(req, res) {
-   questionAPI.addQuestion('bob', 'test', 'descript','category');
+   questionAPI.addQuestion('mary', 'test', 'descript','category');
 });
 
 app.get('/posts', function(req, res) {

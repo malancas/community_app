@@ -36,9 +36,7 @@ function loginUser(uname, pword){
                "post" :  "Password is incorrect"
             }
          });
-
       }
-
    });
 }
 
