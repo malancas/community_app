@@ -8,6 +8,7 @@ var userSchema = new Schema({
   admin : Boolean,
   //location: String // Change to use gps info
   //questions : { type : Array , "default" : [] }
+  email : { type : String, required : true, unique : true },
   questions : [{ type: Schema.Types.ObjectId, ref: 'Question'}]
 },
 {

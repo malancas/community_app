@@ -47,7 +47,7 @@ app.get('/users', function(req, res) {
 //REGISTER USER
 var registerAPI = require('./api/registerUser');
 app.get('/register', function(req, res) {
-   registerAPI.registerUser('michael','sassword');
+   registerAPI.registerUser('geff','sassword','234@email.com');
 });
 
 //LOGIN USER
