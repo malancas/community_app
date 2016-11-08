@@ -1,0 +1,29 @@
+dependencies: \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTMapManager.m \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTMapManager.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTViewManager.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTBridgeModule.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTConvert.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/CSSLayout/CSSLayout.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/CSSLayout/CSSMacros.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTAnimationType.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTBorderStyle.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTPointerEvents.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTEventDispatcher.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTBridge.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTBridgeDelegate.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTJavaScriptLoader.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTFrameUpdate.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTInvalidating.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/UIView+React.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTComponent.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTConvert+CoreLocation.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTConvert+MapKit.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTMap.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Base/RCTUtils.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTMapAnnotation.h \
+  /Users/Rachel/Desktop/Comm2/node_modules/react-native/React/Views/RCTMapOverlay.h
