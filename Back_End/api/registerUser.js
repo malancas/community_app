@@ -43,7 +43,11 @@ function registerUser(uname, pword, emailadd){
       "data" : { "post" : { "username" : uname, "password" : pword, "email" : emailadd } }
     });
   });
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 10e1df0bcac6be7dfab12c897e2b8ed91af2b058
 }
 
 module.exports = {
