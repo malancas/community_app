@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Question = require('./questionSchema');
 
 var userSchema = new Schema({
   username : { type : String, required : true, unique : true },
@@ -8,9 +7,7 @@ var userSchema = new Schema({
   email : { type : String, required : true, unique : true },
   admin : Boolean,
   //location: String // Change to use gps info
-  //questions : { type : Array , "default" : [] }
-  email : { type : String, required : true, unique : true },
-  questions : [{ type: Schema.Types.ObjectId, ref: 'Question'}]
+  questions : { type : Array , "default" : [] }
 },
 {
    timestamps : true //automatically adds createdAt/updatedAt fields

@@ -21,20 +21,19 @@ describe('/PUT register', function() {
   });
 });
 
-/*
+
 describe('/POST login', function() {
   it('should login a user on /login POST', function(done) {
     chai.request(server)
-      .put('/login')
+      .post('/login')
       .send({"username": "sampleName", "password": "temp"})
       .end(function(err, res) {
         console.log(res.body)
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.should.have.property('SUCCESS');
         done();
       });
     });
 });
-*/
+
 // http://mherman.org/blog/2015/09/10/testing-node-js-with-mocha-and-chai/

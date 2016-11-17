@@ -4,38 +4,39 @@ var mongoose = require('mongoose');
 var User = require("../models/userSchema");
 var Question = require("../models/questionSchema");
 
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/communitydb')
+
 // api routes //
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res, next){
   res.render('index', { title: 'Express' });
 });
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
 // Log user in, assume app is already connected to the database
 router.put('/addQuestion', addQuestion);
-router.delete('/deleteQuestion', deleteQuestion);
+router.get('/deleteQuestion', deleteQuestion);
 router.get('/viewQuestion', viewQuestion);
 router.put('/register', register);
-router.post('/login', login);
+router.put('/login', login);
 
 function addQuestion(req, res){
-  if (!req.body) res.json({"status" : "fail",
-                                   "data" : "No data sent"});
-  User.findOne({ "username" : res.user.username });
-  if (!User){
+  if(!req.body) res.json({
+    "status" : "fail",
+    "data" : "No data sent"
+  });
+  User.findOne({ "username" : req.user.username });
+  if(!User){
     res.json({
       "status" : "fail",
       "data" : { "username" : "User not found" }
     });
   }
   
-  // Make unique id
+  // Make unique id for Question
   var newQuestion = {"name" : req.body.qname, "description" : req.body.qdescription, "category" : req.body.qcategory};
-  Users.findOneAndUpdate({username: req.user.username}, {$push: {questions: newQuestion}});
-  
+  Users.findOneAndUpdate({ username : req.user.username}, {$push : {questions : newQuestion} });
+
   res.json({
     "status" : "success",
     "data" : {
@@ -45,46 +46,67 @@ function addQuestion(req, res){
 }
 
 function deleteQuestion(req, res){
+  res.render('index', { title: 'FUTURE DELETE QUESTION '});
   console.log('Delete question...nothing here yet');
 }
 
 function viewQuestion(req, res){
+  res.render('index', { title: 'NOTHING HERE YET' });
   console.log('View question...nothing here yet');
 }
 
+
 function register(req, res){
-  if (User.findOne({ "username": req.body.username })){
-    res.json({"status": "fail",
-             "Message" : "Username already taken"});
+  if(!User.findOne({ "username" : req.body.username })){
+    res.json({
+      "status" : "fail",
+      "Message" : "Username already taken"
+    });
   }
+  // check if email is unique
+  if(!User.findOne({ "email" : req.body.email })){
+    res.json({
+      "status" : "fail",
+      "Message" : "Email already taken" 
+    });
+  }
+  
+
   var newUser = new User({
-    username: req.body.username,
-    password: req.body.password
+    "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')),
+    "password" : JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"')),
+    "email" : JSON.parse(JSON.stringify(req.body.email).replace(/"\s+|\s+"/g,'"')),
+    "admin" : false
   });
 
-  newUser.save(function(err) {
-    if (err){
-      res.json({"status": "fail",
-                "ERROR": err});
-    }
-    else {
-      res.json({"SUCCESS": newUser});
-    }
+  newUser.save(function(err){
+    if(err){
+      console.log('Error adding user to database');
+      return res.send();
+      res.json({ "status": "fail", "ERROR": err });
+    }else
+      res.json({ "SUCCESS": newUser });
   });
 }
 
 function login(req, res){
-  if (!User.findOne({"username" : req.body.username})){
-    res.json({"STATUS": "fail"});
-  }
-  else if (!User.findOne({"username" : req.user.username, "password" : req.user.password})){
-    res.json({"status" : "fail"});
-  }
-  else {
-    res.json({"SUCCESS" : User});
+  if(!User.findOne({ "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')) })){
+    res.json({
+      "status": "fail", 
+      "Message" : "Username not found."
+    });
+  }else if(!User.findOne({ "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')), 
+    "password" : JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"')) })){
+    res.json({
+      "status" : "fail", 
+      "Message" : "Username & password combination not found."
+    });
+  }else{
+    res.json({
+      "status" : "Success!", 
+      "Message" : User
+    });
   }
 }
 
->>>>>>> f559a071cb81db6cd9ee5020f04e06c295b00a6c
->>>>>>> 10e1df0bcac6be7dfab12c897e2b8ed91af2b058
 module.exports = router;
