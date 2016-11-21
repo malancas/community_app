@@ -2,10 +2,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var questionSchema = new Schema({
-  name : { type: String, required: true},
+	creator : { type: String, ref: 'User', required: true },
   description : { type: String, required: true },
   category : { type: String, required: true },
-  //id : { type: Integer, required: true },
+  status : { type: String, required: true },
+  optionA: { type: , required: true },
+  optionB: { type: , required: true },
+  //id : { type: Number, required: true },
 },
 {
   timestamps : true
@@ -14,3 +17,4 @@ var questionSchema = new Schema({
 var Question = mongoose.model('Question', questionSchema);
 
 module.exports = Question;
+
