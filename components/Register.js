@@ -99,7 +99,7 @@ class Register extends Component {
     .then((response) => response.json())
     .then(() => {
       alert('Success! You may now log in.');
-      // Redirect to home screen
+      // Redirect to login screen
       this.props.navigator.pop();
       id:'Login';
     })

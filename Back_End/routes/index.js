@@ -32,18 +32,25 @@ function addQuestion(req, res){
       "data" : { "username" : "User not found" }
     });
   }
-  
-  // Make unique id for Question
-  var newQuestion = {"name" : req.body.qname, "description" : req.body.qdescription, "category" : req.body.qcategory};
-  Users.findOneAndUpdate({ username : req.user.username}, {$push : {questions : newQuestion} });
 
-  res.json({
-    "status" : "success",
-    "data" : {
-      "put" : { "name" : res.body.qname, "description" : res.body.qdescription, "category" : res.body.qcateogry }
-    }
+  var newq = new Question({
+    "creator" : User.objectId,
+    "description" : JSON.parse(JSON.stringify(req.body.description).replace(/"\s+|\s+"/g,'"')),
+    "category" : JSON.parse(JSON.stringify(req.body.category).replace(/"\s+|\s+"/g,'"')),
+    "status" : "Open",
+    "optionA" : JSON.parse(JSON.stringify(req.body.optionA).replace(/"\s+|\s+"/g,'"')),
+    "optionB" : JSON.parse(JSON.stringify(req.body.optionB).replace(/"\s+|\s+"/g,'"')),
+  });
+  newq.save(function(err){
+    if(err){
+      console.log('Error saving question');
+      return res.send();
+      res.json({ "status": "fail", "ERROR": err });
+    } else
+      res.json({ "SUCCESS": newq });
   });
 }
+    
 
 function deleteQuestion(req, res){
   res.render('index', { title: 'FUTURE DELETE QUESTION '});

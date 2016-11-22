@@ -21,90 +21,90 @@ const newUser = t.struct({
 })
 
 const options = {
- fields: {
+  fields: {
 
-   password: {
-     autoCapitalize: 'none',
-     password: true,
-     autoCorrect: false,
-     secureTextEntry: true
-   },
+  password: {
+    autoCapitalize: 'none',
+    password: true,
+    autoCorrect: false,
+    secureTextEntry: true
+  },
 
-   }
- }
+  }
+}
 
 
 class Login extends Component {
 
- constructor(props) {
-   super(props)
-   this.state = {
-     value: {
-       username: '',
-       email: '',
-       password: '',
-       confirmPassword: ''
-     }
-   }
- }
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: {
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      }
+    }
+  }
 
 
- componentWillUnmount() {
-   this.setState = {
-     value: {
-       username: '',
-       password: null,
-     }
-   }
- }
+  componentWillUnmount() {
+    this.setState = {
+      value: {
+        username: '',
+        password: null,
+      }
+    }
+  }
 
- _onChange = (value) => {
-   this.setState({
-     value
-   })
- }
+  _onChange = (value) => {
+    this.setState({
+      value
+    })
+  }
 
- onButtonPress2(){
+  onButtonPress2(){
     this.props.navigator.push({
       id:'Register'
     });
   }
 
- _handleAdd = () => {
-   const value = this.refs.form.getValue();
-   // If the form is valid...
-   if (value) {
-     const data = {
-       "username" : value.username,
-       "password" : value.password,
-     }
-     // Serialize and post the data
-     console.log(data);
-     const json = JSON.stringify(data);
-     fetch('http://localhost:3000/login', {
-       method: 'PUT',
-       headers: {
-         'Content-Type': 'application/json',
-         Accept: 'application/json'
-       },
-       body: json
-     })
-     .then((response) => response.json())
-     .then(() => {
-      alert('Success! You may now log in.');
-      // Redirect to login screen
-      this.props.navigator.push();
+  _handleAdd = () => {
+    const value = this.refs.form.getValue();
+    // If the form is valid...
+    if(value){
+      const data = {
+        "username" : value.username,
+        "password" : value.password,
+      }
+      // Serialize and post the data
+      console.log(data);
+      const json = JSON.stringify(data);
+      fetch('http://localhost:3000/login', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: json
+      })
+      .then((response) => response.json())
+      .then(() => {
+        alert('Success! You may now log in.');
+        // Redirect to main screen
+        this.props.navigator.push();
         id:'Main';
-     })
-     .catch((error) => {
-       alert('There was an error logging in.');
-     })
-     .done()
-   } else {
-     // Form validation error
-     alert('Please fix the errors listed and try again.')
-   }
- }
+      })
+      .catch((error) => {
+        alert('There was an error logging in.');
+      })
+      .done()
+    } else {
+      // Form validation error
+      alert('Please fix the errors listed and try again.')
+    }
+  }
 
   render() {
 
@@ -147,38 +147,38 @@ class Login extends Component {
 }
 
 const styles = StyleSheet.create({
- container: {
-   justifyContent:'center',
-   padding: 40,
-   flexDirection: 'column',
-   backgroundColor: 'transparent',
-   flex: 1
- },
- formContainer:{
-   flex:1,
- },
- imageContainer:{
+  container: {
+    justifyContent:'center',
+    padding: 40,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+    flex: 1
+  },
+  formContainer:{
+    flex:1,
+  },
+  imageContainer:{
     alignItems: 'center',
     justifyContent: 'center',
     flex:1,
     backgroundColor: 'transparent'
   },
- button: {
-   borderRadius: 4,
-   fontSize:20,
-   padding: 20,
-   fontWeight:'bold',
-   textAlign: 'center',
-   marginBottom: 20,
-   color: '#fff'
- },
- brownButton: {
-   backgroundColor: 'burlywood',
- },
- centering: {
-   alignItems: 'center',
-   justifyContent: 'center'
- }
+  button: {
+    borderRadius: 4,
+    fontSize:20,
+    padding: 20,
+    fontWeight:'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#fff'
+  },
+  brownButton: {
+    backgroundColor: 'burlywood',
+  },
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 })
 
 
