@@ -22,10 +22,10 @@ describe('/PUT register', function() {
 });
 
 
-describe('/POST login', function() {
+describe('/PUT login', function() {
   it('should login a user on /login POST', function(done) {
     chai.request(server)
-      .post('/login')
+      .put('/login')
       .send({"username": "sampleName", "password": "temp"})
       .end(function(err, res) {
         console.log(res.body)

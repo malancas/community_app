@@ -64,15 +64,15 @@ function viewQuestion(req, res){
 
 
 function register(req, res){
-  if(!User.findOne({ "username" : req.body.username })){
-    res.json({
+  if(User.findOne({ "username" : req.body.username })){
+    res.status(300).json({
       "status" : "fail",
       "Message" : "Username already taken"
     });
   }
   // check if email is unique
-  if(!User.findOne({ "email" : req.body.email })){
-    res.json({
+  if(User.findOne({ "email" : req.body.email })){
+    res.status(300).json({
       "status" : "fail",
       "Message" : "Email already taken" 
     });
@@ -89,31 +89,25 @@ function register(req, res){
   newUser.save(function(err){
     if(err){
       console.log('Error adding user to database');
-      return res.send();
-      res.json({ "status": "fail", "ERROR": err });
+      //return res.send();
+      res.status(300).json({ "status": "fail", "ERROR": err });
     }else
-      res.json({ "SUCCESS": newUser });
+      res.status(200).json({ "SUCCESS": newUser });
   });
 }
 
 function login(req, res){
   if(!User.findOne({ "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')) })){
-    res.json({
-      "status": "fail", 
-      "Message" : "Username not found."
-    });
-  }else if(!User.findOne({ "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')), 
+    res.status(500).json({status: "FAIL"});
+  }
+  else if(!User.findOne({ "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')), 
     "password" : JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"')) })){
-    res.json({
-      "status" : "fail", 
-      "Message" : "Username & password combination not found."
-    });
-  }else{
-    res.json({
-      "status" : "Success!", 
-      "Message" : User
-    });
+    res.status(300).json({status: "FAIL"});
+  }
+  else{
+    res.status(200).json({status: "SUCCESS"});
   }
 }
 
 module.exports = router;
+
