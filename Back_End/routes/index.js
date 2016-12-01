@@ -64,49 +64,62 @@ function viewQuestion(req, res){
 
 
 function register(req, res){
-  if(User.findOne({ "username" : req.body.username })){
-    res.status(300).json({
-      "status" : "fail",
-      "Message" : "Username already taken"
-    });
-  }
-  // check if email is unique
-  if(User.findOne({ "email" : req.body.email })){
-    res.status(300).json({
-      "status" : "fail",
-      "Message" : "Email already taken" 
-    });
-  }
-  
+  var newUsername = JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"'));
 
+  var newPassword = JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"'))
+
+  var newEmail = JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"'))
+
+  User.findOne({ "username" :  newUsername}, function(err, foundUsername){
+    if (foundUsername != null){
+      res.status(400).json({message : "Username already taken"});
+  }});
+    
+  // check if email is unique
+  User.findOne({"password" : newPassword}, function(err, foundPassword){
+    if (foundPassword != null){
+      res.status(400).json({message : "Password not available"});
+    }
+  });
+  
+  User.findOne({ "email" : newEmail }, function(err, foundEmail){
+    if (foundEmail != null){
+      res.status(400).json({message : "Email not  available"});
+    }
+  });
+  
   var newUser = new User({
-    "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')),
-    "password" : JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"')),
-    "email" : JSON.parse(JSON.stringify(req.body.email).replace(/"\s+|\s+"/g,'"')),
+    "username" : newUsername,
+    "password" : newPassword,
+    "email" : newEmail,
     "admin" : false
   });
 
   newUser.save(function(err){
     if(err){
-      console.log('Error adding user to database');
-      //return res.send();
-      res.status(300).json({ "status": "fail", "ERROR": err });
+      res.status(400).json({ message: "Error adding user to database" });
     }else
-      res.status(200).json({ "SUCCESS": newUser });
+      res.status(200).json({ message: "User has been registered"});
   });
 }
 
+
 function login(req, res){
-  if(!User.findOne({ "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')) })){
-    res.status(500).json({status: "FAIL"});
-  }
-  else if(!User.findOne({ "username" : JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"')), 
-    "password" : JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"')) })){
-    res.status(300).json({status: "FAIL"});
-  }
-  else{
-    res.status(200).json({status: "SUCCESS"});
-  }
+  // Checks if username is not in database
+  var username1 =  JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"'))
+
+  User.findOne({ "username" : username1 }, function (err, foundUser){
+    if (!foundUser){
+      res.status(400).json({message: "Could not find username"});
+    }
+    else {
+      if (foundUser.password ==  JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"'))){
+        res.status(200).json({message: "User logged in."});
+      }
+      else {
+        res.status(400).json({message: "Wrong username-password pairing"});
+      }
+    }});
 }
 
 module.exports = router;
