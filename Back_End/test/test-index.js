@@ -7,10 +7,10 @@ var server = require('../app');
 chai.use(chaiHttp);
 
 describe('/PUT register', function(done) {
-  it('should fail to register a new user on /register PUT', function(done) {
+  it('should fail to register a new user on /register PUT as username is already used', function(done) {
     chai.request(server)
       .put('/register')
-      .send({"username": "sampleName", "password": "temp"})
+      .send({"username": "sampleName", "password": "temp", "email": "test@mail.com"})
       .end(function(err, res) {
         console.log(res.body)
         res.should.be.json;
@@ -39,10 +39,10 @@ describe('/PUT login', function(done) {
 
 
 describe('/PUT login', function(done) {
-  it('should fail to login user on /login POST', function(done) {
+  it('should fail to login user on /login POST because of username', function(done) {
     chai.request(server)
       .put('/login')
-      .send({"username": "notInDB", "password": "temp2"})
+      .send({"username": "notInDB", "password": "temp"})
       .end(function(err, res) {
         console.log(res.body)
         res.should.be.json;
@@ -54,4 +54,17 @@ describe('/PUT login', function(done) {
 });
 
 
-// http://mherman.org/blog/2015/09/10/testing-node-js-with-mocha-and-chai/
+describe('/PUT login', function(done) {
+  it('should fail to login user on /login POST because of password', function(done) {
+    chai.request(server)
+      .put('/login')
+      .send({"username": "sampleUser", "password": "notTemp"})
+      .end(function(err, res) {
+        console.log(res.body)
+        res.should.be.json;
+        res.should.have.status(400);
+        res.body.should.be.a('object');
+        done();
+      });
+    });
+});
