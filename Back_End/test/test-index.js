@@ -59,7 +59,7 @@ describe('/PUT login', function(done) {
   it('should fail to login user on /login POST because of password', function(done) {
     chai.request(server)
       .put('/login')
-      .send({"username": "sampleUser", "password": "notTemp"})
+      .send({"username": "sampleName", "password": "notTemp"})
       .end(function(err, res) {
         console.log(res.body)
         res.should.be.json;
