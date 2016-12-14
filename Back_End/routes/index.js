@@ -65,28 +65,44 @@ function viewQuestion(req, res){
 
 function register(req, res){
   var newUsername = JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"'));
+  console.log(newUsername);
 
-  var newPassword = JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"'))
+  var newPassword = JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"'));
+  console.log(newPassword);
 
-  var newEmail = JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"'))
+  var newEmail = JSON.parse(JSON.stringify(req.body.email).replace(/"\s+|\s+"/g,'"'))
+  console.log(newEmail);
 
-  User.findOne({ "username" :  newUsername}, function(err, foundUsername){
-    if (foundUsername != null){
-      res.status(400).json({message : "Username already taken"});
-  }});
+  // Check if username is unique
+  User.findOne({"username" : newUsername}, function(err, result){
+    if (err){
+      return res.status(400).json({message : "Error searching for user"});
+    }
+    else if (result != null){
+      return res.status(400).json({message : "Username already taken"});
+    }
+  });
     
-  // check if email is unique
-  User.findOne({"password" : newPassword}, function(err, foundPassword){
-    if (foundPassword != null){
-      res.status(400).json({message : "Password not available"});
+  // Check if password is unique
+  User.findOne({"password" : newPassword}, function(err, result){
+    if (err){
+      return res.status(400).json({message : "Error searching for user"});
+    }
+    else if (result != null){
+      return res.status(400).json({message : "Password not available"});
     }
   });
-  
-  User.findOne({ "email" : newEmail }, function(err, foundEmail){
-    if (foundEmail != null){
-      res.status(400).json({message : "Email not  available"});
+
+  // Check if email is unique
+  emailQuery = User.findOne({"email" : newEmail}, function(err, result){
+    if (err){
+      return res.status(400).json({message : "Error searching for user"});
+    }
+    else if (result != null){
+      return res.status(400).json({message : "Email already connected to another account"});
     }
   });
+
   
   var newUser = new User({
     "username" : newUsername,
@@ -97,29 +113,38 @@ function register(req, res){
 
   newUser.save(function(err){
     if(err){
-      res.status(400).json({ message: "Error adding user to database" });
-    }else
-      res.status(200).json({ message: "User has been registered"});
+      return res.status(400).json({ message: "Error adding user to database" });
+    }
+    else {
+      return res.status(200).json({ message: "User has been registered"});
+    }
   });
+  return res.status(400).json({ message: "Unknown error"});
 }
 
 
 function login(req, res){
   // Checks if username is not in database
-  var username1 =  JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"'))
+  var loggedUser =  JSON.parse(JSON.stringify(req.body.username).replace(/"\s+|\s+"/g,'"'));
+  console.log(loggedUser);
+  var loggedPassword = JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"'));
 
-  User.findOne({ "username" : username1 }, function (err, foundUser){
-    if (!foundUser){
-      res.status(400).json({message: "Could not find username"});
+  User.findOne({"username" : loggedUser}, function(err, result){
+    if (err){
+      return res.status(400).json({ message: "Error searching for user"});
+    }
+    else if (result == null){
+      return res.status(400).json({message: "Could not find username"});
     }
     else {
-      if (foundUser.password ==  JSON.parse(JSON.stringify(req.body.password).replace(/"\s+|\s+"/g,'"'))){
-        res.status(200).json({message: "User logged in."});
+      console.log(result.password);
+      console.log(loggedPassword);
+      if (result.password != loggedPassword){
+        return res.status(400).json({ message: "Wrong username-password pairing" });
       }
-      else {
-        res.status(400).json({message: "Wrong username-password pairing"});
-      }
-    }});
+      return res.status(200).json({message: "User logged in."});
+    }
+  });
 }
 
 module.exports = router;

@@ -47,6 +47,7 @@ describe('/PUT login', function(done) {
         console.log(res.body)
         res.should.be.json;
         res.should.have.status(400);
+        //res.body.should.have.message("Could not find username");
         res.body.should.be.a('object');
         done();
       });
@@ -63,6 +64,7 @@ describe('/PUT login', function(done) {
         console.log(res.body)
         res.should.be.json;
         res.should.have.status(400);
+        //res.body.should.have.message("Wrong username-password pairing");
         res.body.should.be.a('object');
         done();
       });
